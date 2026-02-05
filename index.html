@@ -19,42 +19,44 @@
         </div>
 
         <div>
-            <form class="input-group mb-3">
+            <form class="input-group">
                 <span class="input-group-text bi bi-search"></span>
-                <input type="text" class="form-control" placeholder="Search GitHub Profile" required autofocus>
-                <button type="submit" class="btn btn-primary">Search</button>
+                <input type="text" class="form-control" placeholder="Search GitHub Profile" autofocus id="input">
+                <button type="button" class="btn btn-primary" id="submit">Search</button>
             </form>
+            <p id="errorMsg" class="text-danger d-none">Please enter a valid GitHub username</p>
         </div>
-        
+
         <div class="card-body">
 
             <div class="row mb-3">
                 <div class="d-flex justify-content-center align-content-center col-5">
-                    <img src="https://avatars.githubusercontent.com/u/191430473?v=4">
+                    <img id="avatar" src="https://avatars.githubusercontent.com/u/191430473?v=4">
                     <div class="ms-2 align-content-center">
-                        <h3 class="mb-0">Krish Gupta</h3>
-                        <p class="fst-italic d-flex align-items-start ms-1 text-success">skrish-g</p>
+                        <h3 id="name" class="mb-0">Krish Gupta</h3>
+                        <p id="username" class="fst-italic d-flex align-items-start ms-1 text-success">skrish-g</p>
                     </div>
                 </div>
                 <div class="col-7 row">
                     <div class="col-3">
                         <h3>Repos</h3>
-                        <span>16</span>
+                        <span id="repoCount">16</span>
                     </div>
                     <div class="col-4">
                         <h3>Followers</h3>
-                        <span>0</span>
+                        <span id="followerCount">0</span>
                     </div>
                     <div class="col-4">
                         <h3>Following</h3>
-                        <span>1</span>
+                        <span id="followingCount">1</span>
                     </div>
                 </div>
             </div>
-            
+
             <div>
-                <p>
-                    🌟 Coder by passion, problem-solver by heart. 💻 Always exploring new tech & innovations. 🎓 2nd-year student @ PWIOI |
+                <p id="bio">
+                    🌟 Coder by passion, problem-solver by heart. 💻 Always exploring new tech & innovations. 🎓
+                    2nd-year student @ PWIOI |
                     Aspiring Data Scientist @ IIT Madras
                 </p>
             </div>
@@ -65,6 +67,9 @@
 
         </div>
     </div>
+    <script type="text/javascript" src="script.js">
+
+    </script>
 </body>
 
 </html>
