@@ -45,15 +45,15 @@ function stopLoading(){
     document.getElementById("input").value=""
 }
 
-function getData(username){
-    const url=`https://api.github.com/users/${username}`
+function getData(url){
     return fetch(url)
 }
 
 async function consumeData(username) {
     startLoading()
     try {
-        let info=await getData(username)
+        const url=`https://api.github.com/users/${username}`
+        let info=await getData(url)
         if(info.ok===false)
         {
             apiError(info.status)
@@ -61,7 +61,7 @@ async function consumeData(username) {
         }
             
         let data=await info.json()
-        console.log(JSON.stringify(data, null, 2))
+        // console.log(JSON.stringify(data, null, 2))
         document.getElementById("avatar").src=`${data.avatar_url}`
         if(data.name===null)
             document.getElementById("name").textContent=`${data.login}`
@@ -75,10 +75,47 @@ async function consumeData(username) {
             document.getElementById("bio").textContent="No bio available"
         else
             document.getElementById("bio").textContent=`${data.bio}`
+        appendRepoList(username)
     } catch (error) {
         apiError("network_issue")
     } finally{
         stopLoading()
+    }
+}
+
+async function appendRepoList(username) {
+    try {
+        let repoList=document.getElementById("repoList")
+        repoList.innerHTML=""
+        const url=`https://api.github.com/users/${username}/repos?sort=updated&per_page=5`
+        let info=await getData(url)
+        if(info.ok===false)
+        {
+            repoList.textContent="No repositories found!"
+            repoList.text-danger
+            return;
+        }
+            
+        let data=await info.json()
+        // console.log(JSON.stringify(data, null, 2))
+
+        if(data.length===0)
+        {
+            repoList.textContent="User has no repo"
+            repoList.classList.add("text-danger")
+        }
+        else
+        {
+            data.forEach(element => {
+                let div=document.createElement("div")
+                div.innerHTML=`<div class="border border-3 border-dark rounded rounded-3 m-2 p-1">
+                                    <a href="${element.html_url}" target="_blank">${element.name}</a>
+                                </div>`
+                repoList.appendChild(div)
+            });
+        }
+    } catch (error) {
+        apiError("network_issue")
     }
 }
 
