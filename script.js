@@ -1,4 +1,5 @@
-document.getElementById("submit").addEventListener("click", function () {
+document.getElementById("formSubmit").addEventListener("submit", function (e) {
+    e.preventDefault()
     let username = document.getElementById("input").value
     username=username.trim()
     let valid=username.length>0
@@ -13,6 +14,7 @@ document.getElementById("submit").addEventListener("click", function () {
 })
 
 function apiError(status){
+    document.getElementsByClassName("card-body")[0].classList.add("d-none")
     let err=document.getElementById("errorMsg")
     err.classList.remove("d-none")
     if(status==="empty")
@@ -25,6 +27,7 @@ function apiError(status){
         err.textContent="Something went wrong. Please try again!"
     document.getElementById("input").value=""
     document.getElementById("input").focus()
+    console.log(status);
 }
 
 function startLoading(){
@@ -50,6 +53,7 @@ function getData(url){
 }
 
 async function consumeData(username) {
+    document.getElementsByClassName("card-body")[0].classList.remove("d-none")
     startLoading()
     try {
         const url=`https://api.github.com/users/${username}`
@@ -92,7 +96,7 @@ async function appendRepoList(username) {
         if(info.ok===false)
         {
             repoList.textContent="No repositories found!"
-            repoList.text-danger
+            repoList.classList.add("text-danger")
             return;
         }
             
